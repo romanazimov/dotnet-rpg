@@ -31,3 +31,5 @@
 /Users/razimov/RiderProjects/dotnet-rpg/dotnet-rpg/obj/Debug/net7.0/dotnet-rpg.pdb
 /Users/razimov/RiderProjects/dotnet-rpg/dotnet-rpg/obj/Debug/net7.0/dotnet-rpg.genruntimeconfig.cache
 /Users/razimov/RiderProjects/dotnet-rpg/dotnet-rpg/obj/Debug/net7.0/ref/dotnet-rpg.dll
+/Users/razimov/RiderProjects/dotnet-rpg/dotnet-rpg/bin/Debug/net7.0/AutoMapper.dll
+/Users/razimov/RiderProjects/dotnet-rpg/dotnet-rpg/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll

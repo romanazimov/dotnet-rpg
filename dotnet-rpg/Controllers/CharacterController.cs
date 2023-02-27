@@ -6,48 +6,35 @@ namespace dotnet_rpg.Controllers;
 [Route("api/[controller]")]
 public class CharacterController : ControllerBase
 {
-    private static List<Character> characters = new()
+    private readonly ICharacterService _characterService;
+    public CharacterController(ICharacterService characterService)
     {
-        new Character(),
-        new Character(){Id = 1, Name = "Sam"}
-    };
+        _characterService = characterService;
+    }
 
     [HttpGet("GetAll")]
-    public ActionResult<List<Character>> Get()
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterResponseDto>>>> Get()
     {
-        return Ok(characters);
+        return Ok(await _characterService.GetAllCharacters());
     }
     
     [HttpGet("{id}")]
-    public ActionResult<List<Character>> GetSingle(int id)
+    public async Task<ActionResult<ServiceResponse<GetCharacterResponseDto>>> GetSingle(int id)
     {
-        return Ok(characters[id]);
-    }
-    
-    [HttpPost]
-    public ActionResult<List<Character>> AddCharacter(string Name, int HitPoints, int Strength, int Defence, int Intelligence, RpgClass rpgClass)
-    {
-        var character = new Character()
-        {
-            Id = characters.Count,
-            Name = Name,
-            HitPoints = HitPoints,
-            Strength = Strength,
-            Defence = Defence,
-            Intelligence = Intelligence,
-            Class = rpgClass
-        };
-        characters.Add(character);
-        return Ok("Character has been created.");
+        return Ok(await _characterService.GetCharacterById(id));
     }
 
     [HttpDelete]
-    public ActionResult<List<Character>> DeleteCharacter(int id)
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterResponseDto>>>> DeleteCharacter(int id)
     {
-        if (characters.Any(character => character.Id == id))
-        {
-            return Ok($"Character with Id {id} has been deleted.");
-        }
-        return NotFound($"Character with Id {id} was not found.");
+        return Ok(await _characterService.DeleteCharacter(id));
+    }
+    
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<GetCharacterResponseDto>>> UpdateCharacter(UpdateCharacterRequestDto character)
+    {
+        var response = await _characterService.UpdateCharacter(character);
+        if (response.Data is null) return NotFound(response);
+        return Ok(response);
     }
 }
