@@ -30,6 +30,14 @@ public class CharacterController : ControllerBase
         return Ok(await _characterService.DeleteCharacter(id));
     }
     
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<GetCharacterResponseDto>>> UpdateCharacter(AddCharacterRequestDto character)
+    {
+        var response = await _characterService.AddCharacter(character);
+        if (response.Data is null) return NotFound(response);
+        return Ok(response);
+    }
+    
     [HttpPut]
     public async Task<ActionResult<ServiceResponse<GetCharacterResponseDto>>> UpdateCharacter(UpdateCharacterRequestDto character)
     {
